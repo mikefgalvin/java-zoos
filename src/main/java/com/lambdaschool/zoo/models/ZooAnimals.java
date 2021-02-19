@@ -3,21 +3,23 @@ package com.lambdaschool.zoo.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "zooanimals")
-public class ZooAnimals {
+@IdClass(ZooAnimalsId.class)
+public class ZooAnimals extends Auditable implements Serializable {
 
         @Id
         @ManyToOne
         @JoinColumn(name = "zooid")
-        @JsonIgnoreProperties(value = "zooanimals", allowSetters = true)
+        @JsonIgnoreProperties(value = "animals", allowSetters = true)
         private Zoo zoo;
 
         @Id
         @ManyToOne
         @JoinColumn(name = "animalid")
-        @JsonIgnoreProperties(value = "zooanimals", allowSetters = true)
+        @JsonIgnoreProperties(value = "zoos", allowSetters = true)
         private Animal animal;
 
         private String incomingzoo;
@@ -43,10 +45,18 @@ public class ZooAnimals {
 
     public void setIncomingzoo(String incomingzoo) { this.incomingzoo = incomingzoo; }
 
-    // createdby
-    // createdate
-    // lastmodifiedby
-    // lastmodifieddate
-    // incomingzoo
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ZooAnimals)) return false;
+        ZooAnimals that = (ZooAnimals) o;
+        return ((this.zoo == null) ? 0 : this.zoo.getZooid()) == ((that.zoo == null) ? 0 : that.zoo.getZooid()) &&
+                ((this.animal == null) ? 0 :this.animal.getAnimalid()) == ((that.animal == null) ? 0 : that.animal.getAnimalid());
+    }
+
+    @Override
+    public int hashCode() {
+        return 27;
+    }
 
 }

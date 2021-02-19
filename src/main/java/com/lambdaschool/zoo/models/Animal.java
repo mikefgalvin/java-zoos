@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "animals")
-public class Animal {
+public class Animal extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,10 +16,10 @@ public class Animal {
 
     private String animaltype;
 
-    @OneToMany(mappedBy = "animals",
+    @OneToMany(mappedBy = "animal",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JsonIgnoreProperties(value = "animals", allowSetters = true)
+    @JsonIgnoreProperties(value = "animal", allowSetters = true)
     private Set<ZooAnimals> zoos = new HashSet<>();
 
     public Animal() { }
@@ -42,9 +42,4 @@ public class Animal {
         this.zoos = zoos;
     }
 
-    // createdby
-    // createddate
-    // lastmodfiedby
-    // lastmodified date
-    // animaltype string
 }

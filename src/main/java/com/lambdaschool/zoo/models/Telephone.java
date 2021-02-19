@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "telephones")
-public class Telephone {
+public class Telephone extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,11 +45,4 @@ public class Telephone {
 
     public void setZoo(Zoo zoo) { this.zoo = zoo; }
 
-    //createdby - string
-    //createdate - timestamp
-    //lastmodifiedby string
-    //lastmodifieddate timestamp
-    //phonenumber string
-    //phonetype string
-    //zooid -- foreign key
 }

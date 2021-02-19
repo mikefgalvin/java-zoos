@@ -1,7 +1,6 @@
 package com.lambdaschool.zoo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.catalina.LifecycleState;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,31 +10,25 @@ import java.util.Set;
 
 @Entity
 @Table(name = "zoos")
-public class Zoo {
+public class Zoo extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long zooid;
 
-    //createdby string
-    //createddate timestamp
-    //lastmodifiedby string
-    //lastmodifieddate timestamp
-    //zooname string
-
     @Column(nullable = false, unique = true)
     private String zooname;
 
-    @OneToMany(mappedBy = "zoos",
+    @OneToMany(mappedBy = "zoo",
     cascade = CascadeType.ALL,
     orphanRemoval = true)
-    @JsonIgnoreProperties(value = "zoos", allowSetters = true)
+    @JsonIgnoreProperties(value = "zoo", allowSetters = true)
     private List<Telephone> telephones = new ArrayList<>();
 
-    @OneToMany(mappedBy = "zoos",
+    @OneToMany(mappedBy = "zoo",
     cascade = CascadeType.ALL,
     orphanRemoval = true)
-    @JsonIgnoreProperties(value = "zoos", allowSetters = true)
+    @JsonIgnoreProperties(value = "zoo", allowSetters = true)
     private Set<ZooAnimals>  animals = new HashSet<>();
 
     public Zoo() { }
